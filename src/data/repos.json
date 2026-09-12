@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-12T08:49:55.958Z",
-  "publicCount": 31,
+  "generatedAt": "2026-09-12T13:07:40.167Z",
+  "publicCount": 32,
   "repos": [
     {
       "url": "https://github.com/xola/ui-kit",
@@ -22,9 +22,9 @@
       "homepage": "https://ui.xola.io"
     },
     {
-      "url": "https://github.com/rushi/mongo-query-top",
-      "name": "mongo-query-top",
-      "slug": "rushi/mongo-query-top",
+      "url": "https://github.com/rushi/mongotop-web",
+      "name": "mongotop-web",
+      "slug": "rushi/mongotop-web",
       "stars": 1,
       "forks": 0,
       "topics": [
@@ -34,7 +34,7 @@
         "nodejs",
         "top"
       ],
-      "pushedAt": "2026-09-10T23:57:39Z",
+      "pushedAt": "2026-09-12T12:57:39Z",
       "tag": "Tool",
       "npm": null,
       "description": "A full-stack dashboard over currentOp, so you can see what a MongoDB cluster is doing right now.",
@@ -112,7 +112,7 @@
         "cricket",
         "streaming"
       ],
-      "pushedAt": "2026-02-23T03:22:17Z",
+      "pushedAt": "2026-09-12T09:28:24Z",
       "tag": "Audio",
       "npm": null,
       "description": "Mutes cricket ads on a stream by audio fingerprint. Record the ad once, it mutes every time after.",

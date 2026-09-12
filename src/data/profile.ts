@@ -1,4 +1,4 @@
-import { canary } from "../lib/canary";
+import { canary } from "../lib/canary.ts";
 
 export const profile = {
   name: "Rushi Vishavadia",
@@ -20,7 +20,7 @@ export const profile = {
 /** Repos featured on the page, in display order. Everything else on GitHub stays on GitHub. */
 export const featured = [
   "xola/ui-kit",
-  "mongo-query-top",
+  "mongotop-web",
   "gocd-mcp",
   "jstop",
   "frecency",
@@ -43,7 +43,7 @@ export const overrides: Record<string, { blurb?: string; tag?: string; npm?: str
     tag: "Design system",
     npm: "@xola/ui-kit",
   },
-  "mongo-query-top": {
+  "mongotop-web": {
     blurb: "A full-stack dashboard over currentOp, so you can see what a MongoDB cluster is doing right now.",
     tag: "Tool",
   },
