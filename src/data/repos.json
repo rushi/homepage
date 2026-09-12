@@ -1,0 +1,250 @@
+{
+  "generatedAt": "2026-09-12T08:49:55.958Z",
+  "publicCount": 31,
+  "repos": [
+    {
+      "url": "https://github.com/xola/ui-kit",
+      "name": "ui-kit",
+      "slug": "xola/ui-kit",
+      "stars": 4,
+      "forks": 28,
+      "topics": [
+        "design-system",
+        "react",
+        "tailwindcss",
+        "uikit"
+      ],
+      "pushedAt": "2026-09-10T07:06:22Z",
+      "tag": "Design system",
+      "npm": "@xola/ui-kit",
+      "description": "Xola's design system. React components on Tailwind, used across the seller and admin apps.",
+      "language": "JavaScript",
+      "homepage": "https://ui.xola.io"
+    },
+    {
+      "url": "https://github.com/rushi/mongo-query-top",
+      "name": "mongo-query-top",
+      "slug": "rushi/mongo-query-top",
+      "stars": 1,
+      "forks": 0,
+      "topics": [
+        "mongodb",
+        "mongodb-query",
+        "node",
+        "nodejs",
+        "top"
+      ],
+      "pushedAt": "2026-09-10T23:57:39Z",
+      "tag": "Tool",
+      "npm": null,
+      "description": "A full-stack dashboard over currentOp, so you can see what a MongoDB cluster is doing right now.",
+      "language": "TypeScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/gocd-mcp",
+      "name": "gocd-mcp",
+      "slug": "rushi/gocd-mcp",
+      "stars": 2,
+      "forks": 1,
+      "topics": [
+        "ci-cd",
+        "gocd",
+        "mcp"
+      ],
+      "pushedAt": "2026-06-22T07:16:18Z",
+      "tag": "MCP",
+      "npm": null,
+      "description": "An MCP server that lets an AI assistant read GoCD pipelines, stages and failing jobs.",
+      "language": "TypeScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/jstop",
+      "name": "jstop",
+      "slug": "rushi/jstop",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-09-04T08:02:49Z",
+      "tag": "CLI",
+      "npm": "@rushiv/jstop",
+      "description": "`ps -ef | grep node`, but useful. Finds the real node, bun and deno processes, skips the Electron noise, kills what you pick.",
+      "language": "TypeScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/frecency",
+      "name": "frecency",
+      "slug": "rushi/frecency",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-08-28T15:14:43Z",
+      "tag": "Library",
+      "npm": "@rushiv/frecency",
+      "description": "Frequency plus recency ranking for search results. ESM-only TypeScript fork of Mixmax's original.",
+      "language": "TypeScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/madring",
+      "name": "madring",
+      "slug": "rushi/madring",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-09-12T07:06:59Z",
+      "tag": "Map",
+      "npm": null,
+      "description": "Interactive map of the Spanish F1 Madring circuit.",
+      "language": "TypeScript",
+      "homepage": "https://rushi.github.io/madring/"
+    },
+    {
+      "url": "https://github.com/rushi/howzat",
+      "name": "howzat",
+      "slug": "rushi/howzat",
+      "stars": 0,
+      "forks": 0,
+      "topics": [
+        "advertisement",
+        "cricket",
+        "streaming"
+      ],
+      "pushedAt": "2026-02-23T03:22:17Z",
+      "tag": "Audio",
+      "npm": null,
+      "description": "Mutes cricket ads on a stream by audio fingerprint. Record the ad once, it mutes every time after.",
+      "language": "Python",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/css-grid-generator",
+      "name": "css-grid-generator",
+      "slug": "rushi/css-grid-generator",
+      "stars": 0,
+      "forks": 0,
+      "topics": [
+        "css",
+        "grid",
+        "grid-generator",
+        "layout",
+        "masonry",
+        "masonry-layout"
+      ],
+      "pushedAt": "2025-12-25T16:02:23Z",
+      "tag": "Generator",
+      "npm": null,
+      "description": "A visual builder for CSS Grid and masonry layouts where you drag the tracks and copy out the CSS.",
+      "language": "TypeScript",
+      "homepage": "https://css-grid-generator.rushi.dev"
+    },
+    {
+      "url": "https://github.com/rushi/language-flashcards",
+      "name": "language-flashcards",
+      "slug": "rushi/language-flashcards",
+      "stars": 1,
+      "forks": 1,
+      "topics": [
+        "flashcards",
+        "kannada",
+        "language"
+      ],
+      "pushedAt": "2026-03-20T14:12:48Z",
+      "tag": "App",
+      "npm": null,
+      "description": "Flashcards for learning a new language. Kannada first.",
+      "language": "JavaScript",
+      "homepage": "https://language-flashcards.netlify.app/"
+    },
+    {
+      "url": "https://github.com/rushi/eslint-plugin-progress",
+      "name": "eslint-plugin-progress",
+      "slug": "rushi/eslint-plugin-progress",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-07-12T11:57:05Z",
+      "tag": "ESLint",
+      "npm": "eslint-plugin-progressbar",
+      "description": "Prints a progress bar while ESLint runs, for repos where a lint pass takes minutes.",
+      "language": "JavaScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/wakatime-node",
+      "name": "wakatime-node",
+      "slug": "rushi/wakatime-node",
+      "stars": 0,
+      "forks": 0,
+      "topics": [
+        "wakatime",
+        "wakatime-api",
+        "wakatime-stats"
+      ],
+      "pushedAt": "2026-08-04T03:43:13Z",
+      "tag": "Library",
+      "npm": "wakatime-node",
+      "description": "Node library for the Wakatime API.",
+      "language": "TypeScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/raycast-tealdeer",
+      "name": "raycast-tealdeer",
+      "slug": "rushi/raycast-tealdeer",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-03-20T13:51:35Z",
+      "tag": "Raycast",
+      "npm": null,
+      "description": "Tealdeer (tldr) pages inside Raycast.",
+      "language": "TypeScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/gh-current-pr",
+      "name": "gh-current-pr",
+      "slug": "rushi/gh-current-pr",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-03-16T13:18:40Z",
+      "tag": "gh",
+      "npm": null,
+      "description": "gh extension that shows the PR for your current branch: title, URL, merge state, CI checks.",
+      "language": "Shell",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/github-screenshot-taker",
+      "name": "github-screenshot-taker",
+      "slug": "rushi/github-screenshot-taker",
+      "stars": 0,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2026-07-26T09:37:16Z",
+      "tag": "Script",
+      "npm": null,
+      "description": "Screenshots your GitHub profile on a schedule, then stitches the frames into a video.",
+      "language": "JavaScript",
+      "homepage": null
+    },
+    {
+      "url": "https://github.com/rushi/server-name-generator",
+      "name": "server-name-generator",
+      "slug": "rushi/server-name-generator",
+      "stars": 2,
+      "forks": 0,
+      "topics": [],
+      "pushedAt": "2023-05-02T16:26:01Z",
+      "tag": "CLI",
+      "npm": null,
+      "description": "Generates names for servers so you stop calling them db1.",
+      "language": "JavaScript",
+      "homepage": null
+    }
+  ]
+}

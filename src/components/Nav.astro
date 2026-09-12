@@ -1,0 +1,26 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import { profile } from "../data/profile";
+---
+
+<header class="nav" id="nav">
+  <div class="shell nav__inner">
+    <a class="nav__brand" href="#main">
+      <span class="nav__brand-full">{profile.name}</span>
+      <span class="nav__brand-short" aria-hidden="true">
+        {profile.name.split(" ")[0]}
+      </span>
+    </a>
+    <span class="nav__spacer"></span>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="#work">
+        Work
+      </a>
+      <a class="nav__link" href="#contact">
+        Contact
+      </a>
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>

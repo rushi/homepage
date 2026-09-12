@@ -1,0 +1,196 @@
+---
+import { profile } from "../data/profile";
+import { languageToken, type Repo } from "../lib/github";
+import { stripCode } from "../lib/repo";
+import { externalAttrs } from "../lib/paths";
+
+interface Props {
+  repos: Repo[];
+}
+
+const { repos } = Astro.props;
+const links = profile.links.map((link) => ({ name: link.label, hint: link.handle, href: link.href }));
+---
+
+<div class="cmdk" id="cmdk" aria-hidden="true">
+  <div class="cmdk__backdrop" data-close></div>
+
+  <div class="cmdk__panel" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="cmdk__field">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"></circle>
+        <path d="M10.5 10.5 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+      </svg>
+      <input id="cmdk-input" type="text" placeholder="Search repositories…" autocomplete="off" spellcheck="false" />
+      <kbd>esc</kbd>
+    </div>
+
+    <div class="cmdk__results" id="cmdk-results">
+      <p class="cmdk__group" data-group="repos">
+        Open source
+      </p>
+      {repos.map((repo) => (
+        <a
+          class="cmdk__item"
+          href={repo.url}
+          {...externalAttrs(repo.url)}
+          data-group="repos"
+          data-terms={stripCode(
+            `${repo.name} ${repo.description} ${repo.language ?? ""} ${repo.topics.join(" ")}`,
+          ).toLowerCase()}
+        >
+          <span class="dot" data-lang={languageToken(repo.language)}></span>
+          <span class="cmdk__item-name">{repo.name}</span>
+          <span class="cmdk__item-hint">{stripCode(repo.description)}</span>
+        </a>
+      ))}
+
+      <p class="cmdk__group" data-group="links">
+        Elsewhere
+      </p>
+      {links.map((link) => (
+        <a
+          class="cmdk__item"
+          href={link.href}
+          {...externalAttrs(link.href)}
+          data-group="links"
+          data-terms={`${link.name} ${link.hint}`.toLowerCase()}
+        >
+          <span class="cmdk__item-name">{link.name}</span>
+          <span class="cmdk__item-hint">{link.hint}</span>
+        </a>
+      ))}
+
+      <p class="cmdk__empty" id="cmdk-empty" hidden>
+        No matches.
+      </p>
+    </div>
+
+    <div class="cmdk__foot">
+      <span>
+        <kbd>↑</kbd>
+        <kbd>↓</kbd> navigate
+      </span>
+      <span>
+        <kbd>↵</kbd> open
+      </span>
+      <span>
+        <kbd>esc</kbd> close
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const palette = document.getElementById("cmdk")!;
+  const empty = document.getElementById("cmdk-empty")!;
+  const input = document.getElementById("cmdk-input") as HTMLInputElement;
+  const groups = Array.from(palette.querySelectorAll<HTMLElement>(".cmdk__group"));
+  const items = Array.from(palette.querySelectorAll<HTMLAnchorElement>(".cmdk__item"));
+
+  let active = 0;
+  let lastFocused: HTMLElement | undefined;
+
+  const visible = () => items.filter((item) => !item.hidden);
+
+  function paint() {
+    const shown = visible();
+    active = Math.max(0, Math.min(active, shown.length - 1));
+    items.forEach((item) => item.classList.remove("is-active"));
+    shown[active]?.classList.add("is-active");
+    shown[active]?.scrollIntoView({ block: "nearest" });
+  }
+
+  function filter(query: string) {
+    const needle = query.trim().toLowerCase();
+
+    items.forEach((item) => {
+      const isMatch = needle.length === 0 || (item.dataset.terms ?? "").includes(needle);
+      item.hidden = !isMatch;
+    });
+
+    groups.forEach((group) => {
+      const name = group.dataset.group;
+      group.hidden = !items.some((item) => item.dataset.group === name && !item.hidden);
+    });
+
+    empty.hidden = visible().length > 0;
+    active = 0;
+    paint();
+  }
+
+  function open() {
+    lastFocused = document.activeElement as HTMLElement;
+    palette.classList.add("is-open");
+    palette.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    input.value = "";
+    filter("");
+    // The panel is visibility:hidden until the class lands, and a hidden element
+    // cannot take focus. Reading a layout property flushes the style change first.
+    void palette.offsetHeight;
+    input.focus({ preventScroll: true });
+  }
+
+  function close() {
+    palette.classList.remove("is-open");
+    palette.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    lastFocused?.focus({ preventScroll: true });
+  }
+
+  const isOpen = () => palette.classList.contains("is-open");
+
+  palette.querySelector("[data-close]")!.addEventListener("click", close);
+  input.addEventListener("input", () => filter(input.value));
+  items.forEach((item) => {
+    item.addEventListener("mousemove", () => {
+      const position = visible().indexOf(item);
+      if (position !== -1 && position !== active) {
+        active = position;
+        paint();
+      }
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+
+      if (isOpen()) {
+        close();
+      } else {
+        open();
+      }
+
+      return;
+    }
+
+    if (!isOpen()) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      close();
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      active = Math.min(active + 1, visible().length - 1);
+      paint();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      active = Math.max(active - 1, 0);
+      paint();
+    } else if (event.key === "Enter") {
+      const target = visible()[active];
+      if (target) {
+        event.preventDefault();
+        target.click();
+      }
+    } else if (event.key === "Tab") {
+      // Focus stays in the field; the list is driven by the arrow keys.
+      event.preventDefault();
+      input.focus({ preventScroll: true });
+    }
+  });
+</script>

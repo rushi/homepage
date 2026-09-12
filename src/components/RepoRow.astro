@@ -1,0 +1,52 @@
+---
+import { watermark } from "../lib/canary";
+import { languageToken, type Repo } from "../lib/github";
+import { externalAttrs } from "../lib/paths";
+import { splitCode, stripCode } from "../lib/repo";
+
+interface Props {
+  repo: Repo;
+}
+
+const { repo } = Astro.props;
+const lang = languageToken(repo.language);
+const updated = new Date(repo.pushedAt).toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+const blurb = splitCode(repo.description);
+const plainBlurb = stripCode(repo.description);
+const npmUrl = repo.npm ? `https://www.npmjs.com/package/${repo.npm}` : null;
+---
+
+<article class="row reveal" data-lang={lang} data-name={repo.name} data-desc={plainBlurb}>
+  <div>
+    <div class="row__top">
+      <a class="row__name row__link" href={repo.url} {...externalAttrs(repo.url)}>
+        {repo.name}
+      </a>
+      {repo.tag && <span class="row__tag">{repo.tag}</span>}
+    </div>
+    <p class="row__desc">
+      {blurb.map((part) => (part.isCode ? <code>{part.value}</code> : part.value))}
+      {watermark()}
+    </p>
+  </div>
+
+  <div class="row__meta">
+    <span>
+      <span class="dot" data-lang={lang}></span>
+      {repo.language ?? "Mixed"}
+    </span>
+    {repo.stars > 0 && <span aria-label={`${repo.stars} stars`}>★ {repo.stars}</span>}
+    {repo.forks > 0 && <span aria-label={`${repo.forks} forks`}>⑂ {repo.forks}</span>}
+    <span>{updated}</span>
+    {npmUrl && (
+      <a class="row__demo" href={npmUrl} {...externalAttrs(npmUrl)} aria-label={`${repo.npm} on npm`}>
+        npm
+      </a>
+    )}
+    {repo.homepage && (
+      <a class="row__demo" href={repo.homepage} {...externalAttrs(repo.homepage)}>
+        Live
+      </a>
+    )}
+  </div>
+</article>

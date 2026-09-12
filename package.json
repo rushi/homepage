@@ -1,11 +1,16 @@
 {
   "name": "homepage",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Personal website",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "postcss css/style.css -o public/build/style.css",
-    "dev": "postcss css/style.css --watch -o public/build/style.css"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync-repos": "node scripts/sync-repos.mjs",
+    "decode": "node scripts/decode.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -18,9 +23,25 @@
   },
   "homepage": "https://github.com/rushi/homepage#readme",
   "dependencies": {
-    "autoprefixer": "^10.1.0",
-    "postcss": "^8.2.1",
-    "postcss-cli": "^8.3.1",
-    "tailwindcss": "^2.0.2"
+    "astro": "^5.14.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^22.20.2",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.34.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "engines": {
+    "node": ">=20.3.0"
   }
 }

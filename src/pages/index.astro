@@ -1,0 +1,226 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import RepoRow from "../components/RepoRow.astro";
+import CommandPalette from "../components/CommandPalette.astro";
+import { profile } from "../data/profile";
+import { watermark } from "../lib/canary";
+import { getRepos, languageToken } from "../lib/github";
+import { externalAttrs, withBase } from "../lib/paths";
+
+const mark = watermark();
+
+const { repos, publicCount } = await getRepos();
+
+const company = profile.company;
+const companyAttrs = externalAttrs(company.url);
+
+const languageNames = repos.map((repo) => repo.language).filter((name): name is string => Boolean(name));
+const languages = [...new Set(languageNames)].sort();
+
+const allReposUrl = `https://github.com/${profile.github}?tab=repositories`;
+
+const facts = [
+  { key: "Role", value: profile.role, href: null },
+  { key: "Company", value: profile.company.name, href: profile.company.url },
+  { key: "Based in", value: profile.location, href: null },
+  { key: "Public repos", value: String(publicCount), href: allReposUrl },
+];
+
+const sourceUrl = `https://github.com/${profile.github}/homepage`;
+
+const description = `${profile.name}, ${profile.role} at ${profile.company.name} in ${profile.location}. An index of open-source tools, CLIs and libraries.`;
+---
+
+<Base title={`${profile.name} · Engineering Manager & open source`} description={description}>
+  <Nav />
+
+  <main id="main">
+    <section class="intro">
+      <div class="shell intro__grid">
+        <div>
+          <img class="intro__avatar" src={withBase("avatar.jpg")} width="64" height="64" alt="" fetchpriority="high" />
+          <h1 class="intro__name">{profile.name}</h1>
+          {/* prettier-ignore */}
+          <p class="intro__lede">
+            Engineering Manager at <a href={company.url} {...companyAttrs}>{company.name}</a>, working out of {profile.location}.
+            Full-stack by training, which mostly means I still read the queries.{mark}
+          </p>
+          <p class="intro__lede">
+            Day work sits behind an NDA. Everything below I built for myself. Some are tools I wanted to exist, some are
+            side projects about cricket, F1 and learning Kannada.{mark}
+          </p>
+        </div>
+
+        <div class="facts reveal" aria-label="Details">
+          {facts.map((fact) => (
+            <div class="facts__row">
+              <span class="facts__key">{fact.key}</span>
+              <span class="facts__value">
+                {fact.href ? (
+                  <a href={fact.href} {...externalAttrs(fact.href)}>
+                    {fact.value}
+                  </a>
+                ) : (
+                  fact.value
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="index" id="work">
+      <div class="shell">
+        <div class="index__head">
+          <h2 class="index__title">Open source</h2>
+          <p class="index__note">{repos.length} repositories, picked because I still use them.</p>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filter by language">
+          <button class="filter" data-filter="all" aria-pressed="true">
+            All
+          </button>
+          {languages.map((language) => (
+            <button class="filter" data-filter={languageToken(language)} aria-pressed="false">
+              <span class="dot" data-lang={languageToken(language)}></span>
+              {language}
+            </button>
+          ))}
+        </div>
+
+        <div class="rows" id="rows">
+          {repos.map((repo) => (
+            <RepoRow repo={repo} />
+          ))}
+        </div>
+
+        <p class="index__empty" id="rows-empty" hidden>
+          Nothing in that language here.
+        </p>
+
+        <a class="index__more" href={allReposUrl} {...externalAttrs(allReposUrl)}>
+          All repositories on GitHub
+        </a>
+      </div>
+    </section>
+
+    <section class="band" id="contact">
+      <div class="shell">
+        <p class="mono-label">Elsewhere</p>
+        <div class="band__grid">
+          <div>
+            <h2 class="band__title">Where to find me.</h2>
+            <p class="band__note">Email is the one I actually read.</p>
+          </div>
+
+          <div class="contact">
+            {profile.links.map((link) => (
+              <a class="contact__row" href={link.href} {...externalAttrs(link.href)}>
+                <span class="contact__key">{link.label}</span>
+                <span class="contact__value">{link.handle}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="shell foot__inner">
+      <p class="foot__colophon">
+        Built with{" "}
+        <a href="https://astro.build" {...externalAttrs("https://astro.build")}>
+          Astro
+        </a>{" "}
+        and
+        <a href="https://tailwindcss.com" {...externalAttrs("https://tailwindcss.com")}>
+          Tailwind
+        </a>
+        , hosted on
+        <a href="https://pages.github.com" {...externalAttrs("https://pages.github.com")}>
+          GitHub Pages
+        </a>
+        . The repo list comes from the GitHub API at build time.{" "}
+        <a href={sourceUrl} {...externalAttrs(sourceUrl)}>
+          Source
+        </a>
+        .
+      </p>
+      <span class="foot__spacer"></span>
+      <span class="foot__copy">
+        {profile.name} · © {new Date().getFullYear()}
+      </span>
+    </div>
+  </footer>
+
+  <CommandPalette repos={repos} />
+
+  <script>
+    import { encodeZW, hasWatermark, watermarkPayload } from "../lib/canary";
+
+    // Copied text leaves with an invisible watermark so pastes can be traced
+    // back here. Short selections (a handle, a URL) are not worth marking.
+    document.addEventListener("copy", (event) => {
+      const selection = window.getSelection()?.toString() ?? "";
+      const { clipboardData } = event;
+      const isWorthMarking = selection.length >= 20 && !hasWatermark(selection) && clipboardData !== null;
+      if (isWorthMarking) {
+        clipboardData.setData("text/plain", selection + encodeZW(watermarkPayload()));
+        event.preventDefault();
+      }
+
+      type Gtag = (command: string, action: string, params: Record<string, string>) => void;
+      const gtag = (window as Window & { gtag?: Gtag }).gtag;
+      gtag?.("event", "copy", { event_category: "engagement" });
+    });
+
+    // Nav hairline appears once the page has moved.
+    const nav = document.getElementById("nav")!;
+    const onScroll = () => nav.classList.toggle("is-stuck", window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const rowsEmpty = document.getElementById("rows-empty")!;
+    const rows = Array.from(document.querySelectorAll<HTMLElement>(".row"));
+    const filters = Array.from(document.querySelectorAll<HTMLButtonElement>(".filter"));
+
+    filters.forEach((button) => {
+      button.addEventListener("click", () => {
+        const wanted = button.dataset.filter!;
+        filters.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+
+        rows.forEach((row) => {
+          const isMatch = wanted === "all" || row.dataset.lang === wanted;
+          row.hidden = !isMatch;
+        });
+
+        rowsEmpty.hidden = rows.some((row) => !row.hidden);
+      });
+    });
+
+    const reveals = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canObserve = "IntersectionObserver" in window && !prefersReducedMotion;
+
+    if (canObserve) {
+      const onIntersect: IntersectionObserverCallback = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-in");
+          observer.unobserve(entry.target);
+        });
+      };
+
+      const observer = new IntersectionObserver(onIntersect, { rootMargin: "0px 0px -10% 0px" });
+      reveals.forEach((element) => observer.observe(element));
+    } else {
+      reveals.forEach((element) => element.classList.add("is-in"));
+    }
+  </script>
+</Base>
