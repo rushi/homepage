@@ -6,7 +6,7 @@ export const profile = {
   company: { name: "Xola", url: "https://www.xola.com" },
   location: "Bangalore, India",
   avatar: "/avatar.jpg",
-  analyticsId: "UA-41455869-1",
+  analyticsId: "G-V3MMFC87M5",
   email: canary.email,
   github: "rushi",
   links: [
