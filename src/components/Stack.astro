@@ -1,0 +1,38 @@
+---
+import { stack } from "../data/profile";
+import { languageToken } from "../lib/github";
+
+const languages = stack.groups.find((group) => group.label === "Languages");
+const languageNames = new Set<string>(
+  (languages?.items ?? []).map((item: string | { name: string }) => (typeof item === "string" ? item : item.name)),
+);
+---
+
+<section class="stack" id="stack" aria-label="Stack">
+  <div class="shell">
+    <div class="stack__head reveal">
+      <p class="mono-label">Stack</p>
+      <h2 class="stack__title">What I work in.</h2>
+    </div>
+
+    <div class="stack__grid reveal">
+      {stack.groups.map((group) => (
+        <div class="stack__group">
+          <h3 class="mono-label">{group.label}</h3>
+          <ul class="stack__list">
+            {group.items.map((item) => {
+              const name = typeof item === "string" ? item : item.name;
+              return (
+                <li class="stack__item">
+                  {languageNames.has(name) && <span class="dot" data-lang={languageToken(name)}></span>}
+                  <span class="stack__name">{name}</span>
+                  {typeof item === "object" && <span class="stack__examples">({item.examples.join(", ")})</span>}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

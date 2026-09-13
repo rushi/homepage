@@ -11,6 +11,7 @@ const API = `https://api.github.com/users/${profile.github}/repos?type=owner&per
  * A language with no entry here renders with the neutral "other" dot.
  */
 export const LANGUAGE_TOKENS = {
+  Bash: "shell",
   CSS: "css",
   PHP: "php",
   Python: "py",

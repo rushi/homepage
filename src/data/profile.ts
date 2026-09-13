@@ -92,3 +92,29 @@ export const overrides: Record<string, { blurb?: string; tag?: string; npm?: str
   },
   "server-name-generator": { blurb: "Generates names for servers so you stop calling them db1.", tag: "CLI" },
 };
+
+/** Shown in the Stack section. Umbrella items carry their examples inline. The Languages group label is matched by name in Stack.astro to decide which items get a dot. */
+export const stack = {
+  groups: [
+    {
+      label: "Languages",
+      items: ["PHP", "JavaScript", "TypeScript", "Python", { name: "Bash", examples: ["under protest"] }],
+    },
+    { label: "Frameworks", items: ["React", "Node.js", "Astro", "CSS/Tailwind"] },
+    { label: "Databases", items: ["MongoDB", "MySQL", "Elasticsearch", "Redis"] },
+    {
+      label: "DevOps",
+      items: [
+        { name: "AWS", examples: ["Lambda", "EC2", "ECS", "Fargate"] },
+        "Docker",
+        "Ansible",
+        { name: "CI/CD", examples: ["GoCD", "Buildkite", "GitHub Actions"] },
+        "Server ops",
+      ],
+    },
+    {
+      label: "AI Tools",
+      items: ["Claude Code", "OpenCode", "Anthropic models", "GPT models", "Kimi models"],
+    },
+  ],
+} as const;

@@ -400,6 +400,66 @@
     color: var(--color-accent);
   }
 
+  /* ---------- Stack ---------- */
+
+  .stack {
+    padding-block: var(--space-xl);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .stack__head {
+    display: grid;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+  }
+
+  .stack__title {
+    font-size: var(--text-xl);
+  }
+
+  .stack__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-md) var(--space-lg);
+  }
+
+  .stack__group {
+    display: grid;
+    gap: var(--space-2xs);
+    align-self: start;
+  }
+
+  .stack__list {
+    display: grid;
+    gap: var(--space-2xs);
+    align-content: start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stack__item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    min-width: 0;
+    font-size: var(--text-base);
+    line-height: var(--leading-snug);
+  }
+
+  .stack__item .dot {
+    align-self: center;
+  }
+
+  .stack__name {
+    color: var(--color-ink-2);
+  }
+
+  .stack__examples {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
   /* ---------- Index ---------- */
 
   .index {
@@ -962,6 +1022,13 @@
 
 /* ---------- Breakpoints ---------- */
 
+/* Tablet: two stack columns. */
+@media (min-width: 40rem) {
+  .stack__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 48rem) {
   .shell {
     padding-inline: var(--space-xl);
@@ -1012,6 +1079,14 @@
   .band__grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--space-3xl);
+  }
+
+  .stack__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stack {
+    padding-block: var(--space-2xl);
   }
 }
 

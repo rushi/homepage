@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
 import RepoRow from "../components/RepoRow.astro";
+import Stack from "../components/Stack.astro";
 import CommandPalette from "../components/CommandPalette.astro";
 import { profile } from "../data/profile";
 import { watermark } from "../lib/canary";
@@ -70,6 +71,8 @@ const description = `${profile.name}, ${profile.role} at ${profile.company.name}
         </div>
       </div>
     </section>
+
+    <Stack />
 
     <section class="index" id="work">
       <div class="shell">
