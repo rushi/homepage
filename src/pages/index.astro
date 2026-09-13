@@ -28,8 +28,6 @@ const facts = [
   { key: "Public repos", value: String(publicCount), href: allReposUrl },
 ];
 
-const sourceUrl = `https://github.com/${profile.github}/homepage`;
-
 const description = `${profile.name}, ${profile.role} at ${profile.company.name} in ${profile.location}. An index of open-source tools, CLIs and libraries.`;
 ---
 
@@ -133,24 +131,15 @@ const description = `${profile.name}, ${profile.role} at ${profile.company.name}
 
   <footer class="foot">
     <div class="shell foot__inner">
+      {/* prettier-ignore */}
       <p class="foot__colophon">
         Built with{" "}
         <a href="https://astro.build" {...externalAttrs("https://astro.build")}>
           Astro
         </a>{" "}
-        and
-        <a href="https://tailwindcss.com" {...externalAttrs("https://tailwindcss.com")}>
-          Tailwind
-        </a>
-        , hosted on
-        <a href="https://pages.github.com" {...externalAttrs("https://pages.github.com")}>
-          GitHub Pages
-        </a>
-        . The repo list comes from the GitHub API at build time.{" "}
-        <a href={sourceUrl} {...externalAttrs(sourceUrl)}>
-          Source
-        </a>
-        .
+        and{" "}
+        <a href="https://tailwindcss.com" {...externalAttrs("https://tailwindcss.com")}>Tailwind</a>. The repo list
+        comes from the GitHub API at build time.
       </p>
       <span class="foot__spacer"></span>
       <span class="foot__copy">
