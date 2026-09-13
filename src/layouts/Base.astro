@@ -30,6 +30,9 @@ const favicon = withBase("favicon.svg");
 
     <script is:inline>
       // Runs before first paint so a stored choice never flashes the other theme.
+      // The js class also gates the reveal animation: without scripts the page
+      // renders fully visible instead of stuck at opacity 0.
+      document.documentElement.classList.add("js");
       try {
         const stored = localStorage.getItem("theme");
         if (stored === "light" || stored === "dark") {
