@@ -11,7 +11,7 @@
   --color-ink: oklch(24% 0.02 258);
   --color-ink-2: oklch(34% 0.018 257);
   --color-muted: oklch(48% 0.015 256);
-  --color-muted-2: oklch(44% 0.014 256);
+  --color-muted-2: oklch(52% 0.014 256);
 
   /* The one signal */
   --color-accent: oklch(52% 0.2 259);
@@ -92,7 +92,7 @@
 
   --dur-fast: 140ms;
   --dur-base: 200ms;
-  --dur-slow: 600ms;
+  --dur-slow: 400ms;
 }
 
 /* ---------- Dark ----------
@@ -158,7 +158,7 @@
   --color-graphite-2: oklch(16.5% 0.013 262);
   --color-graphite-rule: oklch(27% 0.014 262);
   --color-graphite-ink: oklch(94% 0.007 252);
-  --color-graphite-muted: oklch(68% 0.012 255);
+  --color-graphite-muted: oklch(74% 0.012 255);
   --color-graphite-accent: oklch(76% 0.15 256);
 
   --color-focus: oklch(78% 0.15 256);

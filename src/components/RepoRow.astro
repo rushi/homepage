@@ -19,7 +19,7 @@ const npmUrl = repo.npm ? `https://www.npmjs.com/package/${repo.npm}` : null;
 <article class="row reveal" data-lang={lang} data-name={repo.name} data-desc={plainBlurb}>
   <div>
     <div class="row__top">
-      <a class="row__name row__link" href={repo.url} {...externalAttrs(repo.url)}>
+      <a class="row__name" href={repo.url} {...externalAttrs(repo.url)}>
         {repo.name}
       </a>
       {repo.tag && <span class="row__tag">{repo.tag}</span>}
@@ -36,7 +36,22 @@ const npmUrl = repo.npm ? `https://www.npmjs.com/package/${repo.npm}` : null;
       {repo.language ?? "Mixed"}
     </span>
     {repo.stars > 0 && <span aria-label={`${repo.stars} stars`}>★ {repo.stars}</span>}
-    {repo.forks > 0 && <span aria-label={`${repo.forks} forks`}>⑂ {repo.forks}</span>}
+    {repo.forks > 0 && (
+      <span aria-label={`${repo.forks} forks`}>
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="4" cy="3.5" r="2" stroke="currentColor" stroke-width="1.4" />
+          <circle cx="4" cy="12.5" r="2" stroke="currentColor" stroke-width="1.4" />
+          <circle cx="12" cy="6.5" r="2" stroke="currentColor" stroke-width="1.4" />
+          <path
+            d="M4 5.5v5M12 8.5c0 2.5-2.5 3.5-5.5 3.5"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+          />
+        </svg>
+        {repo.forks}
+      </span>
+    )}
     <span>{updated}</span>
     {npmUrl && (
       <a class="row__demo" href={npmUrl} {...externalAttrs(npmUrl)} aria-label={`${repo.npm} on npm`}>

@@ -3,7 +3,6 @@ import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
 import RepoRow from "../components/RepoRow.astro";
 import Stack from "../components/Stack.astro";
-import CommandPalette from "../components/CommandPalette.astro";
 import { profile } from "../data/profile";
 import { watermark } from "../lib/canary";
 import { getRepos, languageToken } from "../lib/github";
@@ -97,7 +96,7 @@ const description = `${profile.name}, ${profile.role} at ${profile.company.name}
           ))}
         </div>
 
-        <p class="index__empty" id="rows-empty" hidden>
+        <p class="index__empty" id="rows-empty" role="status" hidden>
           Nothing in that language here.
         </p>
 
@@ -148,8 +147,6 @@ const description = `${profile.name}, ${profile.role} at ${profile.company.name}
     </div>
   </footer>
 
-  <CommandPalette repos={repos} />
-
   <script>
     import { encodeZW, hasWatermark, watermarkPayload } from "../lib/canary";
 
@@ -175,6 +172,28 @@ const description = `${profile.name}, ${profile.role} at ${profile.company.name}
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Smooth scroll on anchor clicks only, so keyboard paging stays instant.
+    document.addEventListener("click", (event) => {
+      const anchor = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+      const href = anchor?.getAttribute("href");
+      const target = href && href.length > 1 ? document.querySelector(href) : null;
+      if (!anchor || !(target instanceof HTMLElement)) {
+        return;
+      }
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+      history.pushState(null, "", href);
+      // Move focus like fragment navigation would, or the skip link strands
+      // keyboard users at the top of the page.
+      if (!target.hasAttribute("tabindex")) {
+        target.setAttribute("tabindex", "-1");
+      }
+      target.focus({ preventScroll: true });
+    });
+
     const rowsEmpty = document.getElementById("rows-empty")!;
     const rows = Array.from(document.querySelectorAll<HTMLElement>(".row"));
     const filters = Array.from(document.querySelectorAll<HTMLButtonElement>(".filter"));
@@ -194,7 +213,6 @@ const description = `${profile.name}, ${profile.role} at ${profile.company.name}
     });
 
     const reveals = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canObserve = "IntersectionObserver" in window && !prefersReducedMotion;
 
     if (canObserve) {

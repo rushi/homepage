@@ -14,6 +14,8 @@ const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const avatar = new URL(withBase("avatar.jpg"), Astro.site).href;
 const favicon = withBase("favicon.svg");
+const fontsUrl =
+  "https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@500;600;700&family=Inter:wght@400;500&family=Spline+Sans+Mono:wght@400;500&display=swap";
 ---
 
 <!doctype html>
@@ -26,7 +28,7 @@ const favicon = withBase("favicon.svg");
     <link rel="canonical" href={canonical} />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#22262e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#1d212a" media="(prefers-color-scheme: dark)" />
 
     <script is:inline>
       // Runs before first paint so a stored choice never flashes the other theme.
@@ -52,10 +54,11 @@ const favicon = withBase("favicon.svg");
     <link rel="icon" href={favicon} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@500;600;700&family=Inter:wght@400;500&family=Spline+Sans+Mono:wght@400;500&display=swap"
-    />
+    {/* Loaded async so the fonts stylesheet never blocks first paint. */}
+    <link rel="stylesheet" href={fontsUrl} media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href={fontsUrl} />
+    </noscript>
 
     <script
       is:inline
